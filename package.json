@@ -1,0 +1,16 @@
+{
+  "name": "deangelis-made-projects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "concurrently \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\"",
+    "start": "node backend/dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
