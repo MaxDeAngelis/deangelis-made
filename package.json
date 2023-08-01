@@ -5,12 +5,20 @@
   "main": "index.js",
   "scripts": {
     "build": "concurrently \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\"",
-    "start": "node backend/dist/server.js"
+    "build:dev": "concurrently \"npm run build:dev --prefix ./frontend\" \"npm run build:div --prefix ./backend\"",
+    "start": "node --watch backend/dist/server.js",
+    "start:dev": "node --watch backend/dist/server.js",
+    "lint": "concurrently \"npm run lint --prefix ./frontend\" \"npm run lint --prefix ./backend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "concurrently": "^8.2.0",
+    "eslint": "^8.46.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0"
   }
 }

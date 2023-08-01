@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "npx tsc",
-    "dev": "npx tsc -w"
+    "build": "tsc",
+    "build:dev": "tsc -w",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,6 @@
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
-    "@types/express": "^4.17.17",
-    "typescript": "^5.1.6"
+    "@types/express": "^4.17.17"
   }
 }

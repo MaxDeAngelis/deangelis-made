@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": ["../.eslintrc.json"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "@typescript-eslint/quotes": "off"
+  }
+}
