@@ -8,7 +8,8 @@
     "build:dev": "concurrently \"npm run build:dev --prefix ./frontend\" \"npm run build:div --prefix ./backend\"",
     "start": "node --watch backend/dist/server.js",
     "start:dev": "node --watch backend/dist/server.js",
-    "lint": "concurrently \"npm run lint --prefix ./frontend\" \"npm run lint --prefix ./backend\""
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix",
+    "lint2": "concurrently \"npm run lint --prefix ./frontend\" \"npm run lint --prefix ./backend\""
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,8 @@
     "concurrently": "^8.2.0",
     "eslint": "^8.46.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-typescript": "^17.1.0"
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^8.9.0",
+    "eslint-plugin-prettier": "^5.0.0"
   }
 }
