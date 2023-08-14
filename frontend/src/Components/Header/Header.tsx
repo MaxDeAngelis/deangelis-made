@@ -1,10 +1,16 @@
-import { StyledHeader, StyledLink } from './Header.styles';
+import { StyledHeader, StyledIcon, StyledHeaderContent } from './Header.styles';
+import logo from './Logo.svg';
+import Search from '../Search';
 
 function Header(): JSX.Element {
   return (
     <StyledHeader>
-      <StyledLink href='/'>Home</StyledLink>
-      <StyledLink href='/search'>Search</StyledLink>
+      <StyledIcon href='/'>
+        <img src={logo} alt='log' />
+      </StyledIcon>
+      <StyledHeaderContent>
+        <Search />
+      </StyledHeaderContent>
     </StyledHeader>
   );
 }

@@ -9,7 +9,7 @@
     "start": "node --watch backend/dist/server.js",
     "start:dev": "node --watch backend/dist/server.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix",
-    "lint2": "concurrently \"npm run lint --prefix ./frontend\" \"npm run lint --prefix ./backend\""
+    "dev": "concurrently \"npm run build:dev\" \"npm run start:dev\""
   },
   "keywords": [],
   "author": "",

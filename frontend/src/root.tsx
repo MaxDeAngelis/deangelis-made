@@ -11,6 +11,14 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: sans-serif;
   }
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  main {
+    flex-grow: 1;
+  }
 `;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
