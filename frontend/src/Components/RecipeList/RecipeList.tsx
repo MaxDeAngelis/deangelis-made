@@ -25,8 +25,8 @@ function RecipeList({ heading, recipes }: RecipeListProps): JSX.Element {
   return (
     <Container>
       <h2>{heading}</h2>
-      {recipes.map(({ icon, title, description, author }) => (
-        <Row>
+      {recipes.map(({ id, icon, title, description, author }) => (
+        <Row key={id}>
           <Icon src={icon} />
           <Info>
             <Title>{title}</Title>

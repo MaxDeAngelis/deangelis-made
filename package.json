@@ -6,7 +6,7 @@
   "scripts": {
     "build": "concurrently \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\"",
     "build:dev": "concurrently \"npm run build:dev --prefix ./frontend\" \"npm run build:dev --prefix ./backend\"",
-    "start": "node --watch backend/dist/server.js",
+    "start": "node backend/dist/server.js",
     "start:dev": "node --watch backend/dist/server.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix",
     "dev": "concurrently \"npm run build:dev\" \"npm run start:dev\""

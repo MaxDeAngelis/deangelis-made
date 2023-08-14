@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 
 import Header from './Components/Header';
-import { Search, Home } from './Pages';
+import { Search, Home, RecipeLoader, Recipe } from './Pages';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -29,6 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='recipe' element={<RecipeLoader />}>
+            <Route path=':id' element={<Recipe />} />
+          </Route>
           <Route path='search' element={<Search />} />
         </Routes>
       </BrowserRouter>
