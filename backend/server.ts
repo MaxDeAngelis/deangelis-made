@@ -1,9 +1,13 @@
 import path from 'path';
 import express from 'express';
+import mongoose from 'mongoose';
+
+import Recipe from './Models/recipe';
 
 const { PORT = 3001 } = process.env;
 const FRONT_END_DIST = path.join(__dirname, '../../frontend/dist');
 const app = express();
+mongoose.connect('mongodb://127.0.0.1:27017/deangelismade');
 
 app.use(express.static(FRONT_END_DIST));
 
@@ -19,7 +23,18 @@ app.get('/recipe/*', redirectToMain);
 app.get('/search', redirectToMain);
 
 app.get('/api/recipe', (req, res) => {
-  res.send(req.query);
+  Recipe.findOne({ url: req.query.id }).then((doc) => {
+    res.send(doc);
+  });
+});
+
+app.get('/api/recents', (req, res) => {
+  Recipe.find()
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .then((docs) => {
+      res.send(docs);
+    });
 });
 
 app.listen(PORT, () => {

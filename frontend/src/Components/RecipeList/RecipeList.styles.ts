@@ -8,10 +8,14 @@ export const Container = styled.div`
   row-gap: 1rem;
 `;
 
-export const Row = styled.div`
+export const Row = styled.a`
   display: grid;
   grid-template-columns: minmax(10px, 1fr) 5fr;
   column-gap: 1rem;
+  cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 export const Info = styled.div`

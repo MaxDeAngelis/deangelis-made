@@ -1,14 +1,18 @@
+import { useEffect, useState } from 'react';
+
 import Recents from '../../Components/RecipeList/RecipeList';
 
-import recipes from './FakeRecents.json';
-import favorites from './FakeFavorites.json';
-
 function Home(): JSX.Element {
-  return (
-    <>
-      <Recents heading='Recent recipes' recipes={recipes} />
-      <Recents heading='Favorite recipes' recipes={favorites} />
-    </>
-  );
+  const [recents, setRecents] = useState([]);
+  useEffect(() => {
+    fetch(`/api/recents`)
+      .then((res) => res.json())
+      .then((data) => {
+        setRecents(data);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
+
+  return <Recents heading='Recent recipes' recipes={recents} />;
 }
 export default Home;

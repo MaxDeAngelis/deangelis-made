@@ -11,7 +11,8 @@ import {
 type RecipeSummary = {
   id: number;
   icon: string;
-  title: string;
+  name: string;
+  url: string;
   description: string;
   author: string;
 };
@@ -25,11 +26,11 @@ function RecipeList({ heading, recipes }: RecipeListProps): JSX.Element {
   return (
     <Container>
       <h2>{heading}</h2>
-      {recipes.map(({ id, icon, title, description, author }) => (
-        <Row key={id}>
+      {recipes.map(({ id, icon, name, url, description, author }) => (
+        <Row key={id} href={`/recipe/${url}`}>
           <Icon src={icon} />
           <Info>
-            <Title>{title}</Title>
+            <Title>{name}</Title>
             <Description>{description}</Description>
             <Author>{author}</Author>
           </Info>

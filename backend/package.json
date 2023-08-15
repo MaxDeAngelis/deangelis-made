@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.4.3"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",

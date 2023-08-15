@@ -1,19 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Recipe(): JSX.Element {
+  const [recipe, setRecipe] = useState({});
+
   const params = useParams();
 
   useEffect(() => {
     fetch(`/api/recipe?id=${params.id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setRecipe(data);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
-  return <p>This a Recipe {params.id}</p>;
+  return (
+    <>
+      <h2>{recipe.name}</h2>
+      <h4>{`Created by: ${recipe.author}`}</h4>
+      <h3>Ingredients</h3>
+      <ul>{recipe?.ingredients?.map((ing) => <li>{ing.text}</li>)}</ul>
+      <h3>Steps</h3>
+      <ol>{recipe?.steps?.map((step) => <li>{step.text}</li>)}</ol>
+    </>
+  );
 }
 export default Recipe;
