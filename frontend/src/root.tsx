@@ -10,14 +10,19 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font-family: sans-serif;
+    background-color: #f0f0f0;
   }
   #root {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
   }
   main {
     flex-grow: 1;
+    max-width: 50rem;
+    margin: 6rem auto 0 auto;
+    padding: 0 2rem;
+    background-color: white;
   }
 `;
 

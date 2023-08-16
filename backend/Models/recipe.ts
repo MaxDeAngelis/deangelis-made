@@ -5,10 +5,11 @@ interface Item {
   heading?: Boolean;
 }
 
-interface Recipe {
+interface RecipeProps {
   name: String;
   description: String;
   author: String;
+  image: String;
   url: String;
   prepTime: String;
   cookTime: String;
@@ -22,11 +23,16 @@ const Items = new Schema<Item>({
   heading: { type: Boolean, required: false },
 });
 
-const recipeSchema = new Schema<Recipe>(
+const recipeSchema = new Schema<RecipeProps>(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
     author: { type: String, required: true },
+    image: {
+      type: String,
+      // eslint-disable-next-line no-underscore-dangle
+      default: (doc) => `images/${doc._id}.png`,
+    },
     url: {
       type: String,
       default: (doc) =>

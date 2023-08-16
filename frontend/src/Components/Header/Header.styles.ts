@@ -17,7 +17,10 @@ export const StyledHeader = styled.nav`
   height: 6rem;
   display: flex;
   background-color: white;
+  z-index: 10;
   box-shadow: 0 0.125rem 0.375rem rgb(0 0 0 / 15%);
+  position: fixed;
+  width: 100%;
 `;
 
 export const StyledHeaderContent = styled.div`

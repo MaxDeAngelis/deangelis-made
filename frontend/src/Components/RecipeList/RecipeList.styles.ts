@@ -3,8 +3,6 @@ import { styled } from 'styled-components';
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  max-width: 50rem;
-  margin: auto;
   row-gap: 1rem;
 `;
 
@@ -12,20 +10,23 @@ export const Row = styled.a`
   display: grid;
   grid-template-columns: minmax(10px, 1fr) 5fr;
   column-gap: 1rem;
+  text-decoration: none;
+  color: black;
   cursor: pointer;
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    & h3 {
+      text-decoration: underline;
+    }
   }
 `;
 
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 `;
 
 export const Title = styled.h3`
-  border-bottom: 1px solid gray;
   margin: 5px 0;
 `;
 
@@ -48,6 +49,5 @@ export const Description = styled.p`
   margin: 0;
 `;
 export const Author = styled.h4`
-  border-top: 1px solid gray;
   margin: 5px 0;
 `;

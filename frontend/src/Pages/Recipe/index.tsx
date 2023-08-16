@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import Image from '../../Components/Image';
+import RecipeProps from '../../types/recipe.types';
+
 function Recipe(): JSX.Element {
-  const [recipe, setRecipe] = useState({});
+  const [recipe, setRecipe] = useState<RecipeProps>();
 
   const params = useParams();
 
@@ -16,10 +19,12 @@ function Recipe(): JSX.Element {
         console.log(err.message);
       });
   }, []);
+  if (recipe === null) return <span>Loading...</span>;
   return (
     <>
-      <h2>{recipe.name}</h2>
-      <h4>{`Created by: ${recipe.author}`}</h4>
+      <h2>{recipe?.name}</h2>
+      <h4>{`Created by: ${recipe?.author}`}</h4>
+      <Image />
       <h3>Ingredients</h3>
       <ul>{recipe?.ingredients?.map((ing) => <li>{ing.text}</li>)}</ul>
       <h3>Steps</h3>

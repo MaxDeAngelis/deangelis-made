@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Recents from '../../Components/RecipeList/RecipeList';
+import RecipeList from '../../Components/RecipeList/RecipeList';
 
 function Home(): JSX.Element {
   const [recents, setRecents] = useState([]);
@@ -13,6 +13,6 @@ function Home(): JSX.Element {
       .catch((err) => console.log(err.message));
   }, []);
 
-  return <Recents heading='Recent recipes' recipes={recents} />;
+  return <RecipeList heading='Recent recipes' recipes={recents} />;
 }
 export default Home;

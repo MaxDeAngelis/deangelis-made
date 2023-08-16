@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prebuild": "cp -R ./images ./dist/images",
     "build": "tsc && vite build",
     "build:dev": "vite",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
