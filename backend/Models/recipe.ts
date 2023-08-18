@@ -1,18 +1,18 @@
 import { Schema, model } from 'mongoose';
 
 interface Item {
-  text: String;
-  heading?: Boolean;
+  text: string;
+  heading?: boolean;
 }
 
 interface RecipeProps {
-  name: String;
-  description: String;
-  author: String;
-  image: String;
-  url: String;
-  prepTime: String;
-  cookTime: String;
+  name: string;
+  description: string;
+  author: string;
+  image: string;
+  url: string;
+  prepTime: string;
+  cookTime: string;
   servings: Number;
   steps: Item[];
   ingredients: Item[];

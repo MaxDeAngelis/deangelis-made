@@ -19,10 +19,15 @@ const GlobalStyle = createGlobalStyle`
   }
   main {
     flex-grow: 1;
-    max-width: 50rem;
+    width: 50rem;
     margin: 6rem auto 0 auto;
     padding: 0 2rem;
     background-color: white;
+  }
+  @media only screen and (max-width: 50rem) {
+    main {
+      width: auto;
+    }
   }
 `;
 

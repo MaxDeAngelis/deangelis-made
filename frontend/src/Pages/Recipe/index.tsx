@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Image from '../../Components/Image';
-import RecipeProps from '../../types/recipe.types';
+import RecipeProps from '../../../types/recipe.types';
+import { Description, Step, Ingredient, Label } from './Recipe.style';
 
 function Recipe(): JSX.Element {
   const [recipe, setRecipe] = useState<RecipeProps>();
@@ -24,11 +25,33 @@ function Recipe(): JSX.Element {
     <>
       <h2>{recipe?.name}</h2>
       <h4>{`Created by: ${recipe?.author}`}</h4>
-      <Image />
-      <h3>Ingredients</h3>
-      <ul>{recipe?.ingredients?.map((ing) => <li>{ing.text}</li>)}</ul>
-      <h3>Steps</h3>
-      <ol>{recipe?.steps?.map((step) => <li>{step.text}</li>)}</ol>
+      <Image src={recipe?.image} />
+      <Description>
+        <Label htmlFor='description'>
+          Description
+          <textarea name='description' value={recipe?.description} />
+        </Label>
+      </Description>
+      <Label>
+        Ingredients
+        <ul>
+          {recipe?.ingredients?.map((ing) => (
+            <li>
+              <Ingredient type='text' value={ing.text} />
+            </li>
+          ))}
+        </ul>
+      </Label>
+      <Label>
+        Steps
+        <ol>
+          {recipe?.steps?.map((step) => (
+            <li>
+              <Step value={step.text} />
+            </li>
+          ))}
+        </ol>
+      </Label>
     </>
   );
 }

@@ -8,19 +8,7 @@ import {
   Author,
 } from './RecipeList.styles';
 
-type RecipeSummary = {
-  id: number;
-  image: string;
-  name: string;
-  url: string;
-  description: string;
-  author: string;
-};
-
-type RecipeListProps = {
-  heading: string;
-  recipes: RecipeSummary[];
-};
+import RecipeListProps from './RecipeList.types';
 
 function RecipeList({ heading, recipes }: RecipeListProps): JSX.Element {
   return (
