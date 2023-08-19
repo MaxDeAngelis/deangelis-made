@@ -7,7 +7,6 @@ function Image({ src }: ImageProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    console.log('effect');
     if (!canvasRef.current || !src) return;
     const rect = {
       width: canvasRef.current.width,
@@ -23,13 +22,16 @@ function Image({ src }: ImageProps): JSX.Element {
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!canvasRef.current) return;
     const reader = new FileReader();
-    reader.onload = (event: Event) => {
+    reader.onload = (event) => {
       const img = new (window as any).Image();
-      const context = canvasRef?.current.getContext('2d');
-      img.onload = () => context.drawImage(img, 0, 0);
+      const context = canvasRef?.current?.getContext('2d');
+      img.onload = () => context?.drawImage(img, 0, 0);
       img.src = event?.target?.result;
     };
-    reader.readAsDataURL(e?.target?.files[0]);
+    const uploadedFile = e?.target?.files;
+    if (uploadedFile) {
+      reader.readAsDataURL(uploadedFile.item(0) || new Blob());
+    }
   };
 
   return (
