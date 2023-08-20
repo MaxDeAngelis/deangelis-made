@@ -1,4 +1,5 @@
 interface Item {
+  _id: string;
   text: string;
   heading?: boolean;
 }

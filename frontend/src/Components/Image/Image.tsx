@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 import { Canvas } from './Image.styles';
 import ImageProps from './Image.types';
 
-function Image({ src }: ImageProps): JSX.Element {
+function Image({ src, readonly }: ImageProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Image({ src }: ImageProps): JSX.Element {
   return (
     <>
       <Canvas ref={canvasRef} />
-      <input type='file' onChange={uploadImage} />
+      {readonly || <input type='file' onChange={uploadImage} />}
     </>
   );
 }

@@ -8,7 +8,7 @@ function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {
     <>
       <h2>{name}</h2>
       <h4>{`Created by: ${author}`}</h4>
-      <Image src={image} />
+      <Image src={image} readonly />
       <div>
         <Label htmlFor='description'>
           Description
@@ -18,9 +18,9 @@ function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {
       <Label>
         Ingredients
         <ul>
-          {ingredients?.map((ing) => (
-            <li>
-              <span>{ing.text}</span>
+          {ingredients?.map(({ _id, text }) => (
+            <li key={_id}>
+              <span>{text}</span>
             </li>
           ))}
         </ul>
@@ -28,9 +28,9 @@ function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {
       <Label>
         Steps
         <ol>
-          {steps?.map((step) => (
-            <li>
-              <span>{step.text}</span>
+          {steps?.map(({ _id, text }) => (
+            <li key={_id}>
+              <span>{text}</span>
             </li>
           ))}
         </ol>

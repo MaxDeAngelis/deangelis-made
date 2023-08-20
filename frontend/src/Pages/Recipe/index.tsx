@@ -30,7 +30,19 @@ function Recipe(): JSX.Element {
         {editable ? 'Save' : 'Edit'}
       </button>
       {editable ? (
-        <RecipeEditable recipe={recipe} />
+        <RecipeEditable
+          recipe={recipe}
+          onChange={(propName, value) => {
+            const updatedValus: RecipeProps = {
+              ...recipe,
+            };
+
+            updatedValus[propName] = value;
+            console.log(updatedValus);
+
+            setRecipe(updatedValus);
+          }}
+        />
       ) : (
         <RecipeReadOnly recipe={recipe} />
       )}
