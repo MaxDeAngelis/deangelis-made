@@ -7,6 +7,13 @@ import Header from './Components/Header';
 import { Search, Home, RecipeLoader, Recipe } from './Pages';
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    --font-size: 20px;
+    --background-color: #f0f0f0;
+  }
+  * {
+    font-size: var(--font-size);
+  }
   body {
     margin: 0;
     font-family: sans-serif;
@@ -19,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
   main {
     flex-grow: 1;
-    width: 50rem;
+    width: 100rem;
     margin: 6rem auto 0 auto;
     padding: 0 2rem;
     background-color: white;
