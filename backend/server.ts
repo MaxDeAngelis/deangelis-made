@@ -1,5 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 import path from 'path';
 import express from 'express';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import Recipe from './Models/recipe';
@@ -9,6 +11,7 @@ const FRONT_END_DIST = path.join(__dirname, '../../frontend/dist');
 const app = express();
 mongoose.connect('mongodb://127.0.0.1:27017/deangelismade');
 
+app.use(bodyParser.json());
 app.use(express.static(FRONT_END_DIST));
 
 const redirectToMain = (
@@ -35,6 +38,12 @@ app.get('/api/recents', (req, res) => {
     .then((docs) => {
       res.send(docs);
     });
+});
+
+app.post('/api/save', ({ body: recipe }, res) => {
+  Recipe.updateOne({ _id: recipe._id }, recipe)
+    .catch(() => res.status(500))
+    .finally(() => res.send(recipe));
 });
 
 app.listen(PORT, () => {

@@ -1,4 +1,4 @@
-interface Item {
+export interface RecipeListItemProps {
   _id: string;
   text: string;
   heading?: boolean;
@@ -13,8 +13,8 @@ interface RecipeProps {
   prepTime: string;
   cookTime: string;
   servings: Number;
-  steps: Item[];
-  ingredients: Item[];
+  steps: RecipeListItemProps[];
+  ingredients: RecipeListItemProps[];
 }
 
 export default RecipeProps;

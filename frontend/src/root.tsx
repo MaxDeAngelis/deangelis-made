@@ -7,16 +7,7 @@ import Header from './Components/Header';
 import { Search, Home, RecipeLoader, Recipe } from './Pages';
 
 const GlobalStyle = createGlobalStyle`
-  :root {
-    --font-size: 20px;
-    --background-color: #f0f0f0;
-  }
-  * {
-    font-size: var(--font-size);
-  }
   body {
-    margin: 0;
-    font-family: sans-serif;
     background-color: #f0f0f0;
   }
   #root {
