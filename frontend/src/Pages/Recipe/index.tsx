@@ -17,6 +17,7 @@ function Recipe(): JSX.Element {
       .then((res) => res.json())
       .then((data) => {
         setRecipe(data);
+        if (params.id === 'create') setEditable(true);
       })
       .catch((err) => {
         console.log(err.message);

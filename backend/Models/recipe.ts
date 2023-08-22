@@ -1,3 +1,6 @@
+/* eslint-disable func-names */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable object-shorthand */
 import { Schema, model } from 'mongoose';
 
 interface Item {
@@ -19,30 +22,22 @@ interface RecipeProps {
 }
 
 const Items = new Schema<Item>({
-  text: { type: String, required: true },
-  heading: { type: Boolean, required: false },
+  text: { type: String, default: '', required: true },
+  heading: { type: Boolean, default: false, required: false },
 });
 
 const recipeSchema = new Schema<RecipeProps>(
   {
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    author: { type: String, required: true },
-    image: {
-      type: String,
-      // eslint-disable-next-line no-underscore-dangle
-      default: (doc) => `images/${doc._id}.png`,
-    },
-    url: {
-      type: String,
-      default: (doc) =>
-        doc.name.replace(/ /g, '-').replace(/'/g, '').toLowerCase(),
-    },
-    prepTime: { type: String, required: true },
-    cookTime: { type: String, required: true },
-    servings: { type: String, required: true },
-    steps: { type: [Items] },
-    ingredients: { type: [Items] },
+    name: { type: String, default: '', required: true },
+    description: { type: String, default: '', required: true },
+    author: { type: String, default: '', required: true },
+    image: { type: String, default: '' },
+    url: { type: String, default: '' },
+    prepTime: { type: String, default: '', required: true },
+    cookTime: { type: String, default: '', required: true },
+    servings: { type: Number, default: 1, required: true },
+    steps: { type: [Items], default: [{ text: '' }] },
+    ingredients: { type: [Items], default: [{ text: '' }] },
   },
   {
     timestamps: true,

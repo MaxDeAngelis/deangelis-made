@@ -26,9 +26,13 @@ app.get('/recipe/*', redirectToMain);
 app.get('/search', redirectToMain);
 
 app.get('/api/recipe', (req, res) => {
-  Recipe.findOne({ url: req.query.id }).then((doc) => {
-    res.send(doc);
-  });
+  if (req.query.id === 'create') {
+    res.send(new Recipe());
+  } else {
+    Recipe.findOne({ url: req.query.id }).then((doc) => {
+      res.send(doc);
+    });
+  }
 });
 
 app.get('/api/recents', (req, res) => {
@@ -41,8 +45,15 @@ app.get('/api/recents', (req, res) => {
 });
 
 app.post('/api/save', ({ body: recipe }, res) => {
-  Recipe.updateOne({ _id: recipe._id }, recipe)
-    .catch(() => res.status(500))
+  Recipe.findByIdAndUpdate(recipe._id, recipe, {
+    new: true,
+    upsert: true,
+    setDefaultsOnInsert: true,
+  })
+    .catch((error) => {
+      console.log(error);
+      res.status(500);
+    })
     .finally(() => res.send(recipe));
 });
 
