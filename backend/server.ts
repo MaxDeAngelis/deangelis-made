@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -51,7 +50,7 @@ app.post('/api/save', ({ body: recipe }, res) => {
     setDefaultsOnInsert: true,
   })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
       res.status(500);
     })
     .finally(() => res.send(recipe));

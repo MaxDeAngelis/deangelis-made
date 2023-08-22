@@ -1,6 +1,3 @@
-/* eslint-disable func-names */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable object-shorthand */
 import { Schema, model } from 'mongoose';
 
 interface Item {
@@ -33,8 +30,8 @@ const recipeSchema = new Schema<RecipeProps>(
     author: { type: String, default: '', required: true },
     image: { type: String, default: '' },
     url: { type: String, default: '' },
-    prepTime: { type: String, default: '', required: true },
-    cookTime: { type: String, default: '', required: true },
+    prepTime: { type: String, default: '0:00', required: true },
+    cookTime: { type: String, default: '0:00', required: true },
     servings: { type: Number, default: 1, required: true },
     steps: { type: [Items], default: [{ text: '' }] },
     ingredients: { type: [Items], default: [{ text: '' }] },

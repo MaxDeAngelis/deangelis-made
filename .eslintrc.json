@@ -12,6 +12,7 @@
     "prettier/prettier": [
       "error",
       { "singleQuote": true, "jsxSingleQuote": true }
-    ]
+    ],
+    "no-underscore-dangle": "off"
   }
 }
