@@ -5,12 +5,14 @@ import mongoose from 'mongoose';
 
 import Recipe from './Models/recipe';
 
+const imageDataURI = require('image-data-uri');
+
 const { PORT = 3001 } = process.env;
 const FRONT_END_DIST = path.join(__dirname, '../../frontend/dist');
 const app = express();
 mongoose.connect('mongodb://127.0.0.1:27017/deangelismade');
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '2mb' }));
 app.use(express.static(FRONT_END_DIST));
 
 const redirectToMain = (
@@ -44,7 +46,23 @@ app.get('/api/recents', (req, res) => {
 });
 
 app.post('/api/save', ({ body: recipe }, res) => {
-  Recipe.findByIdAndUpdate(recipe._id, recipe, {
+  let { image } = recipe;
+
+  if (image.indexOf('data:') === 0) {
+    const dataURI = image;
+    image = `images/${recipe._id}.png`;
+
+    imageDataURI
+      .outputFile(dataURI, path.join(FRONT_END_DIST, image))
+      .then((r: any) => console.log(r));
+  }
+
+  const recipeToSave = {
+    ...recipe,
+    image,
+    url: recipe.name.replace(/ /g, '-').replace(/'/g, '').toLowerCase(),
+  };
+  Recipe.findByIdAndUpdate(recipe._id, recipeToSave, {
     new: true,
     upsert: true,
     setDefaultsOnInsert: true,
@@ -53,7 +71,7 @@ app.post('/api/save', ({ body: recipe }, res) => {
       console.error(error);
       res.status(500);
     })
-    .finally(() => res.send(recipe));
+    .finally(() => res.send(recipeToSave));
 });
 
 app.listen(PORT, () => {

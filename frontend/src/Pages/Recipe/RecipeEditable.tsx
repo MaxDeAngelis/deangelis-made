@@ -29,7 +29,7 @@ function RecipeEditable({
           onChange={(e) => onChange('author', e.target.value)}
         />
       </Label>
-      <Image src={image} />
+      <Image src={image} onChange={onChange} />
       <Label htmlFor='description'>
         Description
         <textarea

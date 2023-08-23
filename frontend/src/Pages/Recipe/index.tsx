@@ -1,14 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import RecipeProps from '../../../types/recipe.types';
 import RecipeEditable from './RecipeEditable';
 import RecipeReadOnly from './RecipeReadOnly';
+import Context from '../../Components/Context';
 
 function Recipe(): JSX.Element {
-  const [previousRecipe, setPreviousRecipe] = useState<RecipeProps>();
-  const [recipe, setRecipe] = useState<RecipeProps>();
-  const [editable, setEditable] = useState<Boolean>(false);
+  const {
+    currentRecipe,
+    previousRecipe,
+    editable,
+    setCurrentRecipe,
+    setPreviousRecipe,
+    setEditable,
+  } = useContext(Context);
 
   const params = useParams();
 
@@ -16,7 +22,7 @@ function Recipe(): JSX.Element {
     fetch(`/api/recipe?id=${params.id}`)
       .then((res) => res.json())
       .then((data) => {
-        setRecipe(data);
+        setCurrentRecipe(data);
         if (params.id === 'create') setEditable(true);
       })
       .catch((err) => {
@@ -31,18 +37,24 @@ function Recipe(): JSX.Element {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    }).then((res) => {
-      if (!res.ok) {
-        // eslint-disable-next-line no-alert
-        // alert('Recipe save failed');
-        // eslint-disable-next-line no-console
-        console.log('Response', res);
-        setRecipe(previousRecipe);
-      }
-    });
+    })
+      .then((res) => {
+        if (!res.ok) {
+          // eslint-disable-next-line no-console
+          console.log('Response', res);
+          setCurrentRecipe(previousRecipe);
+          return null;
+        }
+        return res.json();
+      })
+      .then((updatedRecipe) => {
+        if (updatedRecipe) {
+          setCurrentRecipe(updatedRecipe);
+        }
+      });
   };
 
-  if (!recipe) return <span>Loading...</span>;
+  if (!currentRecipe) return <span>Loading...</span>;
 
   return (
     <>
@@ -50,9 +62,9 @@ function Recipe(): JSX.Element {
         type='button'
         onClick={() => {
           if (editable) {
-            save(recipe);
+            save(currentRecipe);
           } else {
-            setPreviousRecipe(recipe);
+            setPreviousRecipe(currentRecipe);
           }
           setEditable(!editable);
         }}
@@ -61,20 +73,20 @@ function Recipe(): JSX.Element {
       </button>
       {editable ? (
         <RecipeEditable
-          recipe={recipe}
+          recipe={currentRecipe}
           onChange={(propName, value) => {
             const updatedValus: RecipeProps = {
-              ...recipe,
+              ...currentRecipe,
             };
 
             updatedValus[propName] = value;
             console.log(updatedValus);
 
-            setRecipe(updatedValus);
+            setCurrentRecipe(updatedValus);
           }}
         />
       ) : (
-        <RecipeReadOnly recipe={recipe} />
+        <RecipeReadOnly recipe={currentRecipe} />
       )}
     </>
   );

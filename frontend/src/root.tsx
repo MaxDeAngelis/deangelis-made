@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 
-import Header from './Components/Header';
-import { Search, Home, RecipeLoader, Recipe } from './Pages';
+import Application from './Components/Application';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -32,17 +30,6 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <GlobalStyle />
-    <Header />
-    <main>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='recipe' element={<RecipeLoader />}>
-            <Route path=':id' element={<Recipe />} />
-          </Route>
-          <Route path='search' element={<Search />} />
-        </Routes>
-      </BrowserRouter>
-    </main>
+    <Application />
   </React.StrictMode>,
 );

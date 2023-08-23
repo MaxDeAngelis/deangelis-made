@@ -1,13 +1,14 @@
 import { useRef, useEffect } from 'react';
+import Resizer from 'react-image-file-resizer';
 
 import { Canvas } from './Image.styles';
 import ImageProps from './Image.types';
 
-function Image({ src, readonly }: ImageProps): JSX.Element {
+function Image({ src, readonly, onChange }: ImageProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!canvasRef.current || !src) return;
+    if (!canvasRef.current || !src || src?.indexOf('data:') === 0) return;
     const rect = {
       width: canvasRef.current.width,
       height: canvasRef.current.height,
@@ -21,16 +22,21 @@ function Image({ src, readonly }: ImageProps): JSX.Element {
 
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!canvasRef.current) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new (window as any).Image();
+    const uploadedFiles = e?.target?.files;
+    const newImage = uploadedFiles?.item(0);
+    if (newImage) {
       const context = canvasRef?.current?.getContext('2d');
-      img.onload = () => context?.drawImage(img, 0, 0);
-      img.src = event?.target?.result;
-    };
-    const uploadedFile = e?.target?.files;
-    if (uploadedFile) {
-      reader.readAsDataURL(uploadedFile.item(0) || new Blob());
+      const rect = {
+        width: canvasRef.current.width,
+        height: canvasRef.current.height,
+      };
+      Resizer.imageFileResizer(newImage, 1000, 1000, 'png', 100, 0, (uri) => {
+        const image = new (window as any).Image();
+        image.onload = () =>
+          context?.drawImage(image, 0, 0, rect.width, rect.height);
+        image.src = uri;
+        onChange('image', uri);
+      });
     }
   };
 
