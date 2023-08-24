@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 import Recipe from '../Models/recipe';
 
 mongoose.connect('mongodb://127.0.0.1:27017/deangelismade');
-
-Recipe.create([
+const recipes = [
   {
     name: 'One pot garlic pasta',
     author: 'Katie DeAngelis',
@@ -525,4 +524,11 @@ Recipe.create([
       { text: '1 Cup Sugar' },
     ],
   },
-]).then(() => console.log('done'));
+];
+
+recipes.forEach((recipe) => {
+  Recipe.create({
+    ...recipe,
+    url: recipe.name.replace(/ /g, '-').replace(/'/g, '').toLowerCase(),
+  });
+});
