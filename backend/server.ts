@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -10,7 +11,11 @@ const imageDataURI = require('image-data-uri');
 const { PORT = 3001 } = process.env;
 const FRONT_END_DIST = path.join(__dirname, '../../frontend/dist');
 const app = express();
-mongoose.connect('mongodb://127.0.0.1:27017/deangelismade');
+
+const { DB_USER, DB_PASSWORD, DB_IP } = process.env;
+mongoose.connect(
+  `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_IP}:27017/deangelismade`,
+);
 
 app.use(bodyParser.json({ limit: '2mb' }));
 app.use(express.static(FRONT_END_DIST));
