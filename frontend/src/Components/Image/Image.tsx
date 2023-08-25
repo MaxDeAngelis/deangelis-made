@@ -35,7 +35,7 @@ function Image({ src, readonly, onChange }: ImageProps): JSX.Element {
         image.onload = () =>
           context?.drawImage(image, 0, 0, rect.width, rect.height);
         image.src = uri;
-        onChange('image', uri);
+        if (onChange) onChange('image', uri);
       });
     }
   };
