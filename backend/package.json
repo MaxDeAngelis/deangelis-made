@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "prebuild": "npm ci",
     "build": "tsc",
     "build:dev": "tsc -w",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
