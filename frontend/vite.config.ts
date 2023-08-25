@@ -1,10 +1,22 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
 
-// https://vitejs.dev/config/
+import reactRefresh from '@vitejs/plugin-react-refresh';
+
 export default defineConfig({
-  plugins: [react()],
-  // build: {
-  //   outDir: "../dist",
-  // },
+  server: {
+    port: 4001,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/images': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
+  plugins: [reactRefresh()],
 });
