@@ -28,5 +28,7 @@ export const StyledHeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 2rem;
+  & > * {
+    margin: 0 2rem 0 0;
+  }
 `;
