@@ -12,9 +12,6 @@ const FRONT_END_DIST = path.join(__dirname, '../../frontend/dist');
 const app = express();
 
 const { DB_USER, DB_PASSWORD, DB_IP, PORT } = process.env;
-console.log(
-  `Connecting to - mongodb://${DB_USER}:${DB_PASSWORD}@${DB_IP}:27017/deangelismade`,
-);
 mongoose.connect(
   `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_IP}:27017/deangelismade`,
 );
