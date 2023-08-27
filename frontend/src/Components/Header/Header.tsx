@@ -1,6 +1,7 @@
 import { StyledHeader, StyledIcon, StyledHeaderContent } from './Header.styles';
 import logo from './Logo.svg';
 import Search from '../Search';
+import Button from '../Button';
 
 import HeaderProps from './Header.types';
 
@@ -12,9 +13,9 @@ function Header({ actions }: HeaderProps): JSX.Element {
       </StyledIcon>
       <StyledHeaderContent>
         {actions.map(({ name, onAction }) => (
-          <button type='button' onClick={onAction}>
+          <Button type='button' onClick={onAction}>
             {name}
-          </button>
+          </Button>
         ))}
         <Search />
       </StyledHeaderContent>
