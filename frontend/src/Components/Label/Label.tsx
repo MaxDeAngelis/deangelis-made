@@ -1,12 +1,15 @@
-import { ReactNode, forwardRef } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import { ReactNode } from 'react';
 
 import { Label } from './Label.style';
 
 interface LabelProps extends React.HTMLProps<HTMLLabelElement> {
   children: ReactNode;
 }
-type Ref = HTMLLabelElement;
 
-export default forwardRef<Ref, LabelProps>((props, ref) => (
-  <Label ref={ref}>{props.children}</Label>
-));
+export default function Button({
+  children,
+  ...restProps
+}: LabelProps): JSX.Element {
+  return <Label {...restProps}>{children}</Label>;
+}
