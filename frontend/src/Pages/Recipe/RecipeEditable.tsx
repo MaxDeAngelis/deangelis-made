@@ -1,6 +1,6 @@
 import Image from '../../Components/Image';
 import RecipeEditableProps from './RecipeEditable.types';
-import { Label } from './Recipe.style';
+import Label from '../../Components/Label';
 import FieldList from '../../Components/FieldList';
 
 function RecipeEditable({
