@@ -7,5 +7,6 @@ export const Label = styled.label`
   margin-top: 10px;
   & > * {
     margin-top: 10px;
+    font-weight: normal;
   }
 `;
