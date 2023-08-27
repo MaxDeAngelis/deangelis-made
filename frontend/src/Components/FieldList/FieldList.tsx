@@ -5,6 +5,7 @@ import Label from '../Label';
 import Button from '../Button';
 
 import Trash from './Trash.svg';
+import Plus from './Plus.svg';
 
 function FieldList({
   heading,
@@ -23,7 +24,7 @@ function FieldList({
     <Label htmlFor={propName}>
       {heading}
       <ListComponent>
-        {list.map(({ _id: rowId, text: rowText }) => (
+        {list.map(({ _id: rowId, text: rowText }, rowIndex) => (
           <li key={rowId}>
             <Row>
               <FormComponent
@@ -32,9 +33,9 @@ function FieldList({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onChange(
                     propName,
-                    list.map(({ _id: storedId, text: storedText }) => ({
+                    list.map(({ _id: storedId, text: storedText }, i) => ({
                       _id: storedId,
-                      text: storedId === rowId ? e.target.value : storedText,
+                      text: i === rowIndex ? e.target.value : storedText,
                     })),
                   );
                 }}
@@ -45,7 +46,7 @@ function FieldList({
                 onClick={() =>
                   onChange(
                     propName,
-                    list.filter(({ _id: storedId }) => storedId !== rowId),
+                    list.filter((_, i) => i !== rowIndex),
                   )
                 }
               >
@@ -55,12 +56,13 @@ function FieldList({
           </li>
         ))}
       </ListComponent>
-      <button
+      <Button
         type='button'
         onClick={() => onChange(propName, [...list, { text: '' }])}
       >
+        <img src={Plus} alt='add' />
         Add
-      </button>
+      </Button>
     </Label>
   );
 }

@@ -6,8 +6,18 @@ export const Input = styled.input`
 export const TextArea = styled.textarea`
   margin: 0;
 `;
-export const OL = styled.ol``;
-export const UL = styled.ul``;
+export const OL = styled.ol`
+  margin-bottom: 0;
+  & > li:last-child {
+    margin-bottom: 0;
+  }
+`;
+export const UL = styled.ul`
+  margin-bottom: 0;
+  & > li:last-child {
+    margin-bottom: 0;
+  }
+`;
 
 export const Row = styled.div`
   display: inline-grid;
