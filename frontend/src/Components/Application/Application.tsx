@@ -49,13 +49,23 @@ function Application(): JSX.Element {
     }
     if (editable && currentRecipe) {
       availableActions.push({
+        name: 'Discard changes',
+        onAction: () => {
+          setCurrentRecipe(previousRecipe);
+          setEditable(false);
+        },
+      });
+      availableActions.push({
         name: 'Save changes',
         onAction: () => currentRecipe && save(currentRecipe),
       });
     } else if (currentRecipe) {
       availableActions.push({
-        name: 'Edit current Recipe',
-        onAction: () => setEditable(true),
+        name: 'Edit Recipe',
+        onAction: () => {
+          setEditable(true);
+          setPreviousRecipe(currentRecipe);
+        },
       });
     }
 
