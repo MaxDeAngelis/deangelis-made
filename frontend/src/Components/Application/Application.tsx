@@ -43,18 +43,18 @@ function Application(): JSX.Element {
     const availableActions: Array<ActionProps> = [];
     if (!editable) {
       availableActions.push({
-        name: 'Create',
+        name: 'Add a Recipe',
         onAction: () => window.location.assign('/recipe/create'),
       });
     }
     if (editable && currentRecipe) {
       availableActions.push({
-        name: 'Save',
+        name: 'Save changes',
         onAction: () => currentRecipe && save(currentRecipe),
       });
     } else if (currentRecipe) {
       availableActions.push({
-        name: 'Edit',
+        name: 'Edit current Recipe',
         onAction: () => setEditable(true),
       });
     }

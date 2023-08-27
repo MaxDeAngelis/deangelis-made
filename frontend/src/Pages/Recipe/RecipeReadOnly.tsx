@@ -1,6 +1,6 @@
 import Image from '../../Components/Image';
 import RecipeProps from '../../../types/recipe.types';
-import { Label } from './Recipe.style';
+import Label from '../../Components/Label';
 
 function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {
   const { name, image, author, description, ingredients, steps } = recipe;
