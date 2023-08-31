@@ -13,9 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.5.0",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "form-data": "^4.0.0",
     "image-data-uri": "^2.0.1",
     "mongoose": "^7.4.3"
   },
