@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "concurrently \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\"",
-    "build:dev": "concurrently \"npm run build:dev --prefix ./frontend\" \"npm run build:dev --prefix ./backend\"",
+    "build:dev": "concurrently \"npm run build:dev --prefix ./frontend\" \"npm run build:dev --prefix ./backend\" \"npm run build:dev --prefix ./image-server\"",
     "start": "node backend/dist/server.js",
-    "start:dev": "node --watch backend/dist/server.js",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix",
-    "dev": "concurrently \"npm run build:dev\" \"npm run start:dev\""
+    "start:backend": "node --watch backend/dist/server.js",
+    "start:image": "node --watch image-server/dist/server.js",
+    "dev": "concurrently \"npm run build:dev\" \"npm run start:backend\" \"npm run start:image\"",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
   },
   "keywords": [],
   "author": "",

@@ -1,8 +1,11 @@
 import 'dotenv/config';
+import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import axios from 'axios';
+import FormData from 'form-data';
 
 import Recipe from './Models/recipe';
 
@@ -11,7 +14,7 @@ const imageDataURI = require('image-data-uri');
 const FRONT_END_DIST = path.join(__dirname, '../../frontend/dist');
 const app = express();
 
-const { DB_USER, DB_PASSWORD, DB_IP, PORT } = process.env;
+const { DB_USER, DB_PASSWORD, DB_IP, PORT, IMAGE_SERVER = '' } = process.env;
 mongoose.connect(
   `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_IP}:27017/deangelismade`,
 );
@@ -29,6 +32,9 @@ const redirectToMain = (
 app.get('/', redirectToMain);
 app.get('/recipe/*', redirectToMain);
 app.get('/search', redirectToMain);
+app.get('/images/*', (req: any, res: { redirect: (arg0: string) => void }) =>
+  res.redirect(`${IMAGE_SERVER}${req.url}`),
+);
 
 app.get('/api/recipe', (req, res) => {
   if (req.query.id === 'create') {
@@ -58,7 +64,21 @@ app.post('/api/save', ({ body: recipe }, res) => {
 
     imageDataURI
       .outputFile(dataURI, path.join(FRONT_END_DIST, image))
-      .then((r: any) => console.log(r));
+      .then((imagePath: any) => {
+        const formData = new FormData();
+        formData.append(
+          'image',
+          fs.createReadStream(imagePath),
+          `${recipe._id}.png`,
+        );
+        axios
+          .post(`${IMAGE_SERVER}/api/upload`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then(() => fs.unlinkSync(imagePath));
+      });
   }
 
   const recipeToSave = {
