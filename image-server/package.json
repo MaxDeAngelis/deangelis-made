@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "npm ci",
     "build": "tsc",
-    "dev": "tsc -w",
+    "build:dev": "tsc -w",
     "start": "node ./dist/server.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
   },
