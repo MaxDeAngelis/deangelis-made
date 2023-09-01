@@ -32,9 +32,12 @@ const redirectToMain = (
 app.get('/', redirectToMain);
 app.get('/recipe/*', redirectToMain);
 app.get('/search', redirectToMain);
-app.get('/images/*', (req: any, res: { redirect: (arg0: string) => void }) =>
-  res.redirect(`${IMAGE_SERVER}${req.url}`),
-);
+app.get('/images/*', (req: any, res) => {
+  axios
+    .get(`${IMAGE_SERVER}${req.url}`, { responseType: 'arraybuffer' })
+    .then(({ data }) => res.send(data))
+    .catch(() => res.status(404).send('Image not found'));
+});
 
 app.get('/api/recipe', (req, res) => {
   if (req.query.id === 'create') {
