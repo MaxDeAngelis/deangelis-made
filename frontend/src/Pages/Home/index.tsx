@@ -10,7 +10,7 @@ function Home(): JSX.Element {
       .then((data) => {
         setRecents(data);
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => console.error(err.message));
   }, []);
 
   return <RecipeList heading='Recent recipes' recipes={recents} />;

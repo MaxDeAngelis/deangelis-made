@@ -1,5 +1,5 @@
 import Image from '../../Components/Image';
-import RecipeProps from '../../../types/recipe.types';
+import RecipeProps from '../../types/recipe.types';
 import Label from '../../Components/Label';
 
 function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {

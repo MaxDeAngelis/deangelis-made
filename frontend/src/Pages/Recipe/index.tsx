@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import RecipeProps from '../../../types/recipe.types';
+import RecipeProps from '../../types/recipe.types';
 import RecipeEditable from './RecipeEditable';
 import RecipeReadOnly from './RecipeReadOnly';
 import Context from '../../Components/Context';

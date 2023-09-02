@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from '../Header';
 import { Search, Home, RecipeLoader, Recipe } from '../../Pages';
 import Context, { ContextProps } from '../Context';
-import RecipeProps from '../../../types/recipe.types';
+import RecipeProps from '../../types/recipe.types';
 import { ActionProps } from '../Header/Header.types';
 
 function Application(): JSX.Element {
