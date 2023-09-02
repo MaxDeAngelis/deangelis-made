@@ -1,6 +1,5 @@
 {
   "env": {
-    "browser": true,
     "es2021": true
   },
   "extends": ["airbnb", "airbnb-typescript", "prettier"],
@@ -13,6 +12,7 @@
       "error",
       { "singleQuote": true, "jsxSingleQuote": true }
     ],
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-console": "off"
   }
 }

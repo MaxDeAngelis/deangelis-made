@@ -4,25 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "concurrently \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\"",
-    "build:dev": "concurrently \"npm run build:dev --prefix ./frontend\" \"npm run build:dev --prefix ./backend\" \"npm run build:dev --prefix ./image-server\"",
-    "start": "node backend/dist/server.js",
-    "start:backend": "node --watch backend/dist/server.js",
-    "start:image": "node --watch image-server/dist/server.js",
-    "dev": "concurrently \"npm run build:dev\" \"npm run start:backend\" \"npm run start:image\"",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
+    "prebuild": "npm ci",
+    "build": "npx lerna run build --scope backend --scope frontend",
+    "build:ci": "npx lerna run build",
+    "start": "npx lerna run start --scope backend",
+    "predev": "npm run lint",
+    "dev": "npx lerna run dev --stream",
+    "lint": "npx lerna run lint --stream"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.5.7",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
-    "concurrently": "^8.2.0",
     "eslint": "^8.46.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^8.9.0",
-    "eslint-plugin-prettier": "^5.0.0"
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "lerna": "^7.2.0"
   }
 }
