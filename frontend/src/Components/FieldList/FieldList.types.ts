@@ -1,4 +1,4 @@
-import RecipeProps, { RecipeListItemProps } from '../../../types/recipe.types';
+import RecipeProps, { RecipeListItemProps } from '../../types/recipe.types';
 
 type RecipeListProps = {
   heading: string;

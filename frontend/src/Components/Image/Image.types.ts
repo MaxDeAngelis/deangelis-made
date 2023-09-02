@@ -1,4 +1,4 @@
-import RecipeProps from '../../../types/recipe.types';
+import RecipeProps from '../../types/recipe.types';
 
 type ImageProps = {
   src?: string;

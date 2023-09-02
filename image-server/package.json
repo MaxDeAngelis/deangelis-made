@@ -1,14 +1,14 @@
 {
-  "name": "backend",
+  "name": "image-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "prebuild": "npm ci",
     "build": "tsc",
-    "build:dev": "tsc -w",
     "start": "node ./dist/server.js",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
+    "dev": "tsc -w & node --watch dist/server.js",
+    "lint": "eslint server.ts --max-warnings 0 --fix"
   },
   "keywords": [],
   "author": "",

@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import RecipeProps from '../../../types/recipe.types';
+import RecipeProps from '../../types/recipe.types';
 
 export interface ContextProps {
   currentRecipe: RecipeProps | null;

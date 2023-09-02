@@ -1,4 +1,4 @@
-import RecipeProps from '../../../types/recipe.types';
+import RecipeProps from '../../types/recipe.types';
 
 type RecipeEditableProps = {
   recipe: RecipeProps;
