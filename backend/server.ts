@@ -49,6 +49,12 @@ app.get('/api/recipe', (req, res) => {
   }
 });
 
+app.get('/api/search', (req, res) => {
+  Recipe.find({ name: { $regex: req.query.q, $options: 'i' } }).then((docs) => {
+    res.send(docs);
+  });
+});
+
 app.get('/api/recents', (req, res) => {
   Recipe.find()
     .sort({ createdAt: -1 })
