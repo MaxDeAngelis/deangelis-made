@@ -5,6 +5,9 @@ export const Container = styled.div`
   grid-template-columns: 1fr 1fr;
   row-gap: 1rem;
   column-gap: 1rem;
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const Row = styled.a`
