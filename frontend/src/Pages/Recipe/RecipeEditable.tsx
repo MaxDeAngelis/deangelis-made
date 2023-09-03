@@ -26,7 +26,9 @@ function RecipeEditable({
           type='text'
           name='author'
           value={author}
-          onChange={(e) => onChange('author', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange('author', e.target.value)
+          }
         />
       </Label>
       <Image src={image} onChange={onChange} />
