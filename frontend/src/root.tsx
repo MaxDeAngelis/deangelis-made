@@ -20,9 +20,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0 2rem;
     background-color: white;
   }
-  @media only screen and (max-width: 50rem) {
+  @media only screen and (max-width: 1100px) {
     main {
       width: auto;
+      margin: 0;
     }
   }
 `;
