@@ -1,4 +1,4 @@
-type RecipeSummary = {
+export type RecipeSummary = {
   id: number;
   image: string;
   name: string;
