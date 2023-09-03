@@ -2,13 +2,14 @@ import { styled } from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   row-gap: 1rem;
+  column-gap: 1rem;
 `;
 
 export const Row = styled.a`
   display: grid;
-  grid-template-columns: minmax(10px, 1fr) 5fr;
+  grid-template-columns: 1fr 1fr;
   column-gap: 1rem;
   text-decoration: none;
   color: black;
@@ -27,7 +28,10 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.h3`
-  margin: 5px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export const Icon = styled.img`
@@ -49,5 +53,8 @@ export const Description = styled.p`
   margin: 0;
 `;
 export const Author = styled.h4`
-  margin: 5px 0;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  color: gray;
 `;
