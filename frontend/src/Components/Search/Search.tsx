@@ -1,10 +1,14 @@
 import { Container, Input, Img } from './Search.styles';
 import Magnify from './Magnify.svg';
 
-function Search(): JSX.Element {
+function Search({
+  onSearch,
+}: {
+  onSearch: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}): JSX.Element {
   return (
     <Container>
-      <Input type='text' />
+      <Input type='text' onKeyUp={onSearch} />
       <Img src={Magnify} />
     </Container>
   );

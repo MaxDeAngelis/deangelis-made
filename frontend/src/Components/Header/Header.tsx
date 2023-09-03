@@ -5,7 +5,7 @@ import Button from '../Button';
 
 import HeaderProps from './Header.types';
 
-function Header({ actions }: HeaderProps): JSX.Element {
+function Header({ actions, onSearch }: HeaderProps): JSX.Element {
   return (
     <StyledHeader>
       <StyledIcon href='/'>
@@ -17,7 +17,7 @@ function Header({ actions }: HeaderProps): JSX.Element {
             {name}
           </Button>
         ))}
-        <Search />
+        <Search onSearch={onSearch} />
       </StyledHeaderContent>
     </StyledHeader>
   );

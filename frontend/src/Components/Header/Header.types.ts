@@ -5,4 +5,5 @@ export interface ActionProps {
 
 export default interface HeaderProps {
   actions: ActionProps[];
+  onSearch: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }

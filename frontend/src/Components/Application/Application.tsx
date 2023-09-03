@@ -2,7 +2,8 @@ import { useState, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Header from '../Header';
-import { Search, Home, RecipeLoader, Recipe } from '../../Pages';
+import { Search, Home, Recipe } from '../../Pages';
+import Loader from '../Loader';
 import Context, { ContextProps } from '../Context';
 import RecipeProps from '../../types/recipe.types';
 import { ActionProps } from '../Header/Header.types';
@@ -85,12 +86,20 @@ function Application(): JSX.Element {
   );
   return (
     <Context.Provider value={contextValue}>
-      <Header actions={actions} />
+      <Header
+        actions={actions}
+        onSearch={(e: React.KeyboardEvent) => {
+          if (e.key === 'Enter') {
+            const target = e.target as HTMLInputElement;
+            window.location.assign(`/search?q=${target.value}`);
+          }
+        }}
+      />
       <main>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='recipe' element={<RecipeLoader />}>
+            <Route path='recipe' element={<Loader />}>
               <Route path=':id' element={<Recipe />} />
             </Route>
             <Route path='search' element={<Search />} />
