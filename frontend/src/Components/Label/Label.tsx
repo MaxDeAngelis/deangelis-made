@@ -7,7 +7,7 @@ interface LabelProps extends React.HTMLProps<HTMLLabelElement> {
   children: ReactNode;
 }
 
-export default function Button({
+export default function Component({
   children,
   ...restProps
 }: LabelProps): JSX.Element {
