@@ -68,12 +68,12 @@ export const Author = styled.h4`
 export const Time = styled.div`
   display: flex;
   flex-grow: 1;
-  flex-direction: column;
-  justify-content: end;
+  flex-direction: row;
+  align-items: end;
   margin-bottom: 10px;
   color: gray;
   & span {
-    margin-left: 10px;
+    margin: 10px;
     color: black;
   }
 `;
