@@ -1,15 +1,11 @@
-export type RecipeSummary = {
-  id: number;
-  image: string;
-  name: string;
-  url: string;
-  description: string;
-  author: string;
-};
+import RecipeProps from '../../types/recipe.types';
 
-type RecipeListProps = {
+export interface RecipeSummary extends RecipeProps {
+  id: number;
+}
+interface RecipeListProps {
   heading: string;
   recipes: RecipeSummary[];
-};
+}
 
 export default RecipeListProps;

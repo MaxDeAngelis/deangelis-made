@@ -17,6 +17,9 @@ export const Row = styled.a`
   text-decoration: none;
   color: black;
   cursor: pointer;
+  & * {
+    cursor: pointer;
+  }
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     & h3 {
@@ -60,4 +63,17 @@ export const Author = styled.h4`
   font-size: 2rem;
   font-weight: bold;
   color: gray;
+`;
+
+export const Time = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: end;
+  margin-bottom: 10px;
+  color: gray;
+  & span {
+    margin: 10px;
+    color: black;
+  }
 `;
