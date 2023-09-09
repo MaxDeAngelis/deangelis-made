@@ -1,8 +1,13 @@
 import { Schema, model } from 'mongoose';
 
-interface Item {
+interface ItemProps {
   text: string;
   heading?: boolean;
+}
+
+interface TimeProps {
+  amount: number;
+  unit: 'mins' | 'hours' | 'days';
 }
 
 interface RecipeProps {
@@ -11,16 +16,21 @@ interface RecipeProps {
   author: string;
   image: string;
   url: string;
-  prepTime: string;
-  cookTime: string;
+  prepTime: TimeProps;
+  cookTime: TimeProps;
   servings: Number;
-  steps: Item[];
-  ingredients: Item[];
+  steps: ItemProps[];
+  ingredients: ItemProps[];
 }
 
-const Items = new Schema<Item>({
+const Items = new Schema<ItemProps>({
   text: { type: String, default: '', required: true },
   heading: { type: Boolean, default: false, required: false },
+});
+
+const Time = new Schema<TimeProps>({
+  amount: { type: Number, default: 0, required: true },
+  unit: { type: String, default: 'mins', required: true },
 });
 
 const recipeSchema = new Schema<RecipeProps>(
@@ -30,8 +40,8 @@ const recipeSchema = new Schema<RecipeProps>(
     author: { type: String, default: '', required: true },
     image: { type: String, default: '' },
     url: { type: String, default: '' },
-    prepTime: { type: String, default: '0:00', required: true },
-    cookTime: { type: String, default: '0:00', required: true },
+    prepTime: { type: Time, required: true },
+    cookTime: { type: Time, required: true },
     servings: { type: Number, default: 1, required: true },
     steps: { type: [Items], default: [{ text: '' }] },
     ingredients: { type: [Items], default: [{ text: '' }] },
