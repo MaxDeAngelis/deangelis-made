@@ -4,14 +4,20 @@ export interface RecipeListItemProps {
   heading?: boolean;
 }
 
+export interface RecipeTimeProps {
+  type: 'prep' | 'cook';
+  amount: number;
+  unit: 'mins' | 'hours' | 'days';
+}
+
 interface RecipeProps {
   name: string;
   description: string;
   author: string;
   image: string;
   url: string;
-  prepTime: string;
-  cookTime: string;
+  prepTime: RecipeTimeProps;
+  cookTime: RecipeTimeProps;
   servings: Number;
   steps: RecipeListItemProps[];
   ingredients: RecipeListItemProps[];
