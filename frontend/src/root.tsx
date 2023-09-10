@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
   @media only screen and (max-width: 1100px) {
     main {
       width: auto;
-      margin: 0;
+      margin: 6rem 0 0 0;
     }
   }
 `;
