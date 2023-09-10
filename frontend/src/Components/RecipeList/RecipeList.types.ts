@@ -4,7 +4,7 @@ export interface RecipeSummary extends RecipeProps {
   id: number;
 }
 interface RecipeListProps {
-  heading: string;
+  heading?: string;
   recipes: RecipeSummary[];
 }
 

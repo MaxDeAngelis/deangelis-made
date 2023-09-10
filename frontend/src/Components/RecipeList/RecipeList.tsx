@@ -12,7 +12,7 @@ import RecipeListProps from './RecipeList.types';
 function RecipeList({ heading, recipes }: RecipeListProps): JSX.Element {
   return (
     <>
-      <h2>{heading}</h2>
+      {heading && <h2>{heading}</h2>}
       <Container>
         {recipes.map(({ id, image, name, url, prepTime, cookTime, author }) => (
           <Row key={id} href={`/recipe/${url}`}>
