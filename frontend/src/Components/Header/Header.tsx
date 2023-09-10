@@ -17,7 +17,7 @@ function Header({ actions, onSearch }: HeaderProps): JSX.Element {
             {name}
           </Button>
         ))}
-        <Search onSearch={onSearch} />
+        <Search collapsable onSearch={onSearch} />
       </StyledHeaderContent>
     </StyledHeader>
   );

@@ -4,6 +4,7 @@ import RecipeProps from '../../types/recipe.types';
 import { RecipeSummary } from '../../Components/RecipeList/RecipeList.types';
 import RecipeList from '../../Components/RecipeList';
 import SearchInput from '../../Components/Search';
+import { SearchLabel } from './SearchPage.styles';
 
 function Search(): JSX.Element {
   const [results, setResults] = useState<RecipeProps | []>([]);
@@ -27,16 +28,16 @@ function Search(): JSX.Element {
 
   return (
     <>
-      <SearchInput
-        onSearch={(e) => {
-          const target = e.target as HTMLInputElement;
-          search(target.value);
-        }}
-      />
-      <RecipeList
-        heading='Search results'
-        recipes={results as RecipeSummary[]}
-      />
+      <SearchLabel htmlFor='search'>
+        <h5>Search for</h5>
+        <SearchInput
+          onSearch={(e) => {
+            const target = e.target as HTMLInputElement;
+            search(target.value);
+          }}
+        />
+      </SearchLabel>
+      <RecipeList recipes={results as RecipeSummary[]} />
     </>
   );
 }

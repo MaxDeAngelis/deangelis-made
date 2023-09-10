@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 
 export const StyledIcon = styled.a`
   display: flex;
+  margin: 0.5rem;
   width: 6rem;
 `;
 
