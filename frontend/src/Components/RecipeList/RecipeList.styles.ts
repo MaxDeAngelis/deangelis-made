@@ -31,6 +31,7 @@ export const Row = styled.a`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Title = styled.h3`
@@ -38,6 +39,10 @@ export const Title = styled.h3`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin: 0;
+  @media (max-width: 500px) {
+    -webkit-line-clamp: 2;
+  }
 `;
 
 export const Icon = styled.img`
@@ -67,13 +72,11 @@ export const Author = styled.h4`
 
 export const Time = styled.div`
   display: flex;
-  flex-grow: 1;
   flex-direction: row;
-  align-items: end;
-  margin-bottom: 10px;
   color: gray;
   & span {
-    margin: 10px;
+    display: inline-block;
+    margin: 0 10px;
     color: black;
   }
 `;

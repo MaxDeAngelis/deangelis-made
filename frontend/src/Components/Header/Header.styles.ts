@@ -1,20 +1,16 @@
 import { styled } from 'styled-components';
 
-export const StyledIcon = styled.a`
+export const Icon = styled.a`
   display: flex;
   margin: 0.5rem;
   width: 6rem;
 `;
 
-export const StyledLink = styled.a`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #4caf50;
-  padding: 0 1rem;
+export const Image = styled.img`
+  width: 100%;
 `;
 
-export const StyledHeader = styled.nav`
+export const Nav = styled.nav`
   height: 6rem;
   display: flex;
   background-color: white;
@@ -24,7 +20,7 @@ export const StyledHeader = styled.nav`
   width: 100%;
 `;
 
-export const StyledHeaderContent = styled.div`
+export const Content = styled.div`
   flex-grow: 1;
   display: flex;
   align-items: center;
