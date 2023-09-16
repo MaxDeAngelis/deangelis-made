@@ -12,8 +12,8 @@ function Header({ actions, onSearch }: HeaderProps): JSX.Element {
         <Image src={logo} alt='log' />
       </Icon>
       <Content>
-        {actions.map(({ name, onAction }) => (
-          <Button type='button' onClick={onAction}>
+        {actions.map(({ id, name, onAction }) => (
+          <Button key={id} type='button' onClick={onAction}>
             {name}
           </Button>
         ))}

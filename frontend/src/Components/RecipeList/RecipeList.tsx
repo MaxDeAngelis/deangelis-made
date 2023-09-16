@@ -14,8 +14,8 @@ function RecipeList({ heading, recipes }: RecipeListProps): JSX.Element {
     <>
       {heading && <h2>{heading}</h2>}
       <Container>
-        {recipes.map(({ id, image, name, url, prepTime, cookTime, author }) => (
-          <Row key={id} href={`/recipe/${url}`}>
+        {recipes.map(({ image, name, url, prepTime, cookTime, author }) => (
+          <Row key={url} href={`/recipe/${url}`}>
             <Icon src={image} />
             <Info>
               <Title>{name}</Title>
