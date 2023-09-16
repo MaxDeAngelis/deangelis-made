@@ -40,8 +40,16 @@ const recipeSchema = new Schema<RecipeProps>(
     author: { type: String, default: '', required: true },
     image: { type: String, default: '' },
     url: { type: String, default: '' },
-    prepTime: { type: Time, required: true },
-    cookTime: { type: Time, required: true },
+    prepTime: {
+      type: Time,
+      default: {},
+      required: true,
+    },
+    cookTime: {
+      type: Time,
+      default: {},
+      required: true,
+    },
     servings: { type: Number, default: 1, required: true },
     steps: { type: [Items], default: [{ text: '' }] },
     ingredients: { type: [Items], default: [{ text: '' }] },

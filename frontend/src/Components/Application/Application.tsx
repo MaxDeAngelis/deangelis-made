@@ -44,12 +44,14 @@ function Application(): JSX.Element {
     const availableActions: Array<ActionProps> = [];
     if (!editable) {
       availableActions.push({
+        id: 'add',
         name: 'Add a Recipe',
         onAction: () => window.location.assign('/recipe/create'),
       });
     }
     if (editable && currentRecipe) {
       availableActions.push({
+        id: 'discard',
         name: 'Discard changes',
         onAction: () => {
           setCurrentRecipe(previousRecipe);
@@ -57,11 +59,13 @@ function Application(): JSX.Element {
         },
       });
       availableActions.push({
+        id: 'save',
         name: 'Save changes',
         onAction: () => currentRecipe && save(currentRecipe),
       });
     } else if (currentRecipe) {
       availableActions.push({
+        id: 'edit',
         name: 'Edit Recipe',
         onAction: () => {
           setEditable(true);

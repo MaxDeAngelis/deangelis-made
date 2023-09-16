@@ -1,4 +1,5 @@
 export interface ActionProps {
+  id: string;
   name: string;
   onAction: () => void;
 }
