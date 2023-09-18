@@ -6,6 +6,9 @@ export const Input = styled.input`
 export const TextArea = styled.textarea`
   margin: 0;
 `;
+export const Heading = styled(Input)`
+  font-weight: bold;
+`;
 export const OL = styled.ol`
   margin-bottom: 0;
   & > li:last-child {

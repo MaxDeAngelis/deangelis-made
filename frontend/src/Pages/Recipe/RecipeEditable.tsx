@@ -67,14 +67,14 @@ function RecipeEditable({
         />
       </Label>
       <FieldList
-        heading='Ingredients'
+        label='Ingredients'
         variant='single'
         propName='ingredients'
         list={ingredients}
         onChange={onChange}
       />
       <FieldList
-        heading='Steps'
+        label='Steps'
         variant='multi'
         ordered
         propName='steps'
