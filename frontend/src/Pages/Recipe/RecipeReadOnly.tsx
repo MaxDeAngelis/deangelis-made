@@ -2,6 +2,7 @@ import Image from '../../Components/Image';
 import RecipeProps from '../../types/recipe.types';
 import Label from '../../Components/Label';
 import Time from '../../Components/Time';
+import FieldListReadOnly from '../../Components/FieldList/FieldListReadOnly';
 
 function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {
   const {
@@ -14,6 +15,7 @@ function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {
     ingredients,
     steps,
   } = recipe;
+
   return (
     <>
       <h2>{name}</h2>
@@ -35,32 +37,12 @@ function RecipeReadOnly({ recipe }: { recipe: RecipeProps }): JSX.Element {
         onChange={() => {}}
       />
       <Image src={image} readonly />
-      <div>
-        <Label htmlFor='description'>
-          Description
-          <p>{description}</p>
-        </Label>
-      </div>
-      <Label>
-        Ingredients
-        <ul>
-          {ingredients?.map(({ _id, text }) => (
-            <li key={_id}>
-              <span>{text}</span>
-            </li>
-          ))}
-        </ul>
+      <Label htmlFor='description'>
+        Description
+        <p>{description}</p>
       </Label>
-      <Label>
-        Steps
-        <ol>
-          {steps?.map(({ _id, text }) => (
-            <li key={_id}>
-              <span>{text}</span>
-            </li>
-          ))}
-        </ol>
-      </Label>
+      <FieldListReadOnly label='Ingredients' list={ingredients} />
+      <FieldListReadOnly label='Steps' list={steps} ordered />
     </>
   );
 }
