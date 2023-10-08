@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { useSessionStorage } from 'usehooks-ts';
 
 import Header from '../Header';
 import { Search, Home, Recipe } from '../../Pages';
@@ -7,13 +9,38 @@ import Loader from '../Loader';
 import Context, { ContextProps } from '../Context';
 import RecipeProps from '../../types/recipe.types';
 import { ActionProps } from '../Header/Header.types';
+import { User } from './Application.types';
+
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 function Application(): JSX.Element {
+  const [user, setUser] = useSessionStorage<User | undefined>(
+    'user',
+    undefined,
+  );
   const [currentRecipe, setCurrentRecipe] = useState<RecipeProps | null>(null);
   const [previousRecipe, setPreviousRecipe] = useState<RecipeProps | null>(
     null,
   );
   const [editable, setEditable] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    fetch(`/api/session`)
+      .then((res) => {
+        // If the user session expired on the server reset client
+        if (res.status === 401) {
+          setUser(undefined);
+          return null;
+        }
+        return res.json();
+      })
+      .then((data: User | undefined) => {
+        // If somehow the client session does not match server reset
+        if (data?.name !== user?.name) setUser(undefined);
+      })
+      .catch((e) => console.error('Unable to validate session', e));
+  }, []);
 
   const save = (data: RecipeProps) => {
     fetch('/api/save', {
@@ -42,6 +69,7 @@ function Application(): JSX.Element {
 
   const actions = useMemo(() => {
     const availableActions: Array<ActionProps> = [];
+    if (!user) return availableActions;
     if (!editable) {
       availableActions.push({
         id: 'add',
@@ -75,7 +103,7 @@ function Application(): JSX.Element {
     }
 
     return availableActions;
-  }, [editable, currentRecipe]);
+  }, [user, editable, currentRecipe]);
 
   const contextValue = useMemo<ContextProps>(
     () => ({
@@ -89,28 +117,52 @@ function Application(): JSX.Element {
     [currentRecipe, previousRecipe, editable],
   );
   return (
-    <Context.Provider value={contextValue}>
-      <Header
-        actions={actions}
-        onSearch={(e: React.KeyboardEvent) => {
-          if (e.key === 'Enter') {
-            const target = e.target as HTMLInputElement;
-            window.location.assign(`/search?q=${target.value}`);
-          }
-        }}
-      />
-      <main>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='recipe' element={<Loader />}>
-              <Route path=':id' element={<Recipe />} />
-            </Route>
-            <Route path='search' element={<Search />} />
-          </Routes>
-        </BrowserRouter>
-      </main>
-    </Context.Provider>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <Context.Provider value={contextValue}>
+        <Header
+          actions={actions}
+          user={user}
+          onSearch={(e: React.KeyboardEvent) => {
+            if (e.key === 'Enter') {
+              const target = e.target as HTMLInputElement;
+              window.location.assign(`/search?q=${target.value}`);
+            }
+          }}
+          onLogin={(credentialResponse) => {
+            fetch('/api/login', {
+              method: 'POST', // *GET, POST, PUT, DELETE, etc.
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                user: credentialResponse.credential,
+              }),
+            })
+              .then((res) => res.json())
+              .then((response) => {
+                if (response) {
+                  setUser({
+                    name: response.name,
+                    picture: response.picture,
+                  });
+                  console.log('Internal login:', response);
+                }
+              });
+          }}
+        />
+        <main>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='recipe' element={<Loader />}>
+                <Route path=':id' element={<Recipe />} />
+              </Route>
+              <Route path='search' element={<Search />} />
+            </Routes>
+          </BrowserRouter>
+        </main>
+      </Context.Provider>
+    </GoogleOAuthProvider>
   );
 }
 

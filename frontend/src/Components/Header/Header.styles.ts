@@ -1,5 +1,9 @@
 import { styled } from 'styled-components';
 
+export const Avatar = styled.img`
+  border-radius: 50%;
+`;
+
 export const Icon = styled.a`
   display: flex;
   margin: 0.5rem;
