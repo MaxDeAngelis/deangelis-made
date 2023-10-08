@@ -8,16 +8,8 @@ function RecipeEditable({
   recipe,
   onChange,
 }: RecipeEditableProps): JSX.Element {
-  const {
-    name,
-    image,
-    prepTime,
-    cookTime,
-    author,
-    description,
-    ingredients,
-    steps,
-  } = recipe;
+  const { name, image, prepTime, cookTime, description, ingredients, steps } =
+    recipe;
   return (
     <>
       <Label htmlFor='name'>
@@ -27,18 +19,6 @@ function RecipeEditable({
           name='name'
           value={name}
           onChange={(e) => onChange('name', e.target.value)}
-        />
-      </Label>
-
-      <Label htmlFor='author'>
-        Author
-        <input
-          type='text'
-          name='author'
-          value={author}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onChange('author', e.target.value)
-          }
         />
       </Label>
       <Time

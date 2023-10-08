@@ -1,24 +1,46 @@
 import 'dotenv/config';
 import fs from 'fs';
 import path from 'path';
-import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import axios from 'axios';
 import FormData from 'form-data';
-
+import { OAuth2Client } from 'google-auth-library';
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import Recipe from './Models/recipe';
+
+declare module 'express-session' {
+  export interface SessionData {
+    user?: {
+      name: string | undefined;
+      picture: string | undefined;
+    };
+  }
+}
 
 const imageDataURI = require('image-data-uri');
 
 const FRONT_END_DIST = path.join(__dirname, '../../frontend/dist');
 const app = express();
 
-const { DB_USER, DB_PASSWORD, DB_IP, PORT, IMAGE_SERVER = '' } = process.env;
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_IP,
+  PORT,
+  IMAGE_SERVER = '',
+  VITE_GOOGLE_CLIENT_ID,
+} = process.env;
 mongoose.connect(
   `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_IP}:27017/deangelismade`,
 );
 
+app.use(cookieParser());
+app.use(
+  session({ secret: 'deangelis-made', resave: true, saveUninitialized: true }),
+);
 app.use(bodyParser.json({ limit: '2mb' }));
 app.use(express.static(FRONT_END_DIST));
 
@@ -64,47 +86,75 @@ app.get('/api/recents', (req, res) => {
     });
 });
 
-app.post('/api/save', ({ body: recipe }, res) => {
-  let { image } = recipe;
+app.post('/api/save', ({ body: recipe, session: reqSession }, res) => {
+  if (reqSession.user) {
+    let { image } = recipe;
+    if (image.indexOf('data:') === 0) {
+      const dataURI = image;
+      image = `images/${recipe._id}.png`;
 
-  if (image.indexOf('data:') === 0) {
-    const dataURI = image;
-    image = `images/${recipe._id}.png`;
+      imageDataURI
+        .outputFile(dataURI, path.join(FRONT_END_DIST, image))
+        .then((imagePath: any) => {
+          const formData = new FormData();
+          formData.append(
+            'image',
+            fs.createReadStream(imagePath),
+            `${recipe._id}.png`,
+          );
+          axios
+            .post(`${IMAGE_SERVER}/api/upload`, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+            .then(() => fs.unlinkSync(imagePath));
+        });
+    }
 
-    imageDataURI
-      .outputFile(dataURI, path.join(FRONT_END_DIST, image))
-      .then((imagePath: any) => {
-        const formData = new FormData();
-        formData.append(
-          'image',
-          fs.createReadStream(imagePath),
-          `${recipe._id}.png`,
-        );
-        axios
-          .post(`${IMAGE_SERVER}/api/upload`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          .then(() => fs.unlinkSync(imagePath));
-      });
-  }
-
-  const recipeToSave = {
-    ...recipe,
-    image,
-    url: recipe.name.replace(/ /g, '-').replace(/'/g, '').toLowerCase(),
-  };
-  Recipe.findByIdAndUpdate(recipe._id, recipeToSave, {
-    new: true,
-    upsert: true,
-    setDefaultsOnInsert: true,
-  })
-    .catch((error) => {
-      console.error(error);
-      res.status(500);
+    const recipeToSave = {
+      ...recipe,
+      image,
+      author: reqSession.user.name,
+      url: recipe.name.replace(/ /g, '-').replace(/'/g, '').toLowerCase(),
+    };
+    Recipe.findByIdAndUpdate(recipe._id, recipeToSave, {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
     })
-    .finally(() => res.send(recipeToSave));
+      .catch((error) => {
+        console.error(error);
+        res.status(500);
+      })
+      .finally(() => res.send(recipeToSave));
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.post('/api/login', async (req, res) => {
+  const client = new OAuth2Client(VITE_GOOGLE_CLIENT_ID);
+  const verified = await client.verifyIdToken({
+    idToken: req.body.user,
+    audience: VITE_GOOGLE_CLIENT_ID,
+  });
+  const payload = verified.getPayload();
+  if (payload) {
+    req.session.user = {
+      name: payload.name,
+      picture: payload.picture,
+    };
+  }
+  res.send(payload);
+});
+
+app.get('/api/session', async (req, res) => {
+  if (req.session.user) {
+    res.send(req.session.user);
+  } else {
+    res.status(401).send({});
+  }
 });
 
 app.listen(PORT, () => {
