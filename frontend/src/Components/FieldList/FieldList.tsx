@@ -34,6 +34,13 @@ function FieldList({
                 <FormComponent
                   type='text'
                   value={rowText}
+                  placeholder={`Please add a ${
+                    heading
+                      ? 'heading'
+                      : `new ${label
+                          .toLowerCase()
+                          .substring(0, label.length - 1)}`
+                  }`}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange(
                       propName,
