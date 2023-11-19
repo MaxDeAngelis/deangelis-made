@@ -46,7 +46,9 @@ DeAngelisMade is meant to be a dirt simple recipe archive of all our favorite re
    ```
 5. Configure mongo to start in secure mode
    - go back to regular **terminal**
-   - run `vi /usr/local/etc/mongod.conf`
+   - edit the mongodb [config file](https://www.mongodb.com/docs/manual/reference/configuration-options/#configuration-file)
+   - run `vi /usr/local/etc/mongod.conf` (Mac OS)
+   - run `vi <install directory>\bin\mongod.cfg` (Windows)
    - uncomment the following block
    ```
    security:
