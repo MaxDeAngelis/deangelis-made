@@ -42,8 +42,8 @@ function FieldListReadOnly({
 
   const ListComp = ordered ? OL : UL;
   return (
-    <Label>
-      {label}
+    <div>
+      <Label varient='large'>{label}</Label>
       {groupedList.map((group) => {
         const sublist = (
           <ListComp>
@@ -62,7 +62,7 @@ function FieldListReadOnly({
         }
         return sublist;
       })}
-    </Label>
+    </div>
   );
 }
 

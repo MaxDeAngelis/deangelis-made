@@ -18,8 +18,8 @@ function FieldList({
   const ListComponent: React.ElementType = ordered === true ? OL : UL;
 
   return (
-    <Label htmlFor={propName}>
-      {label}
+    <div>
+      <Label htmlFor={propName}>{label}</Label>
       <ListComponent>
         {list.map(({ text: rowText, heading }, rowIndex) => {
           let FormComponent: React.ElementType =
@@ -83,7 +83,7 @@ function FieldList({
         <img src={Plus} alt='add' />
         Add header
       </Button>
-    </Label>
+    </div>
   );
 }
 export default FieldList;
