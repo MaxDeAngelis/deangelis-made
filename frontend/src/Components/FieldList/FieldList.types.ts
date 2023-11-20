@@ -1,10 +1,10 @@
 import RecipeProps, { RecipeListItemProps } from '../../types/recipe.types';
 
-interface FieldListProps extends FieldListPropsReadOnly {
-  variant: 'single' | 'multi';
-  propName: keyof RecipeProps;
-  onChange: (propName: keyof RecipeProps, value: any) => void;
-}
+export type SubGroup = {
+  text?: string;
+  originalIndex: number;
+  items: { text: string; originalIndex: number }[];
+};
 
 export interface FieldListPropsReadOnly {
   label: string;
@@ -12,4 +12,8 @@ export interface FieldListPropsReadOnly {
   list: RecipeListItemProps[];
 }
 
-export default FieldListProps;
+export default interface FieldListProps extends FieldListPropsReadOnly {
+  variant: 'single' | 'multi';
+  propName: keyof RecipeProps;
+  onChange: (propName: keyof RecipeProps, value: any) => void;
+}
