@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useGroupedList from './useGroupedList';
 import useHandleChange from './useHandleChange';
 import useHandleDelete from './useHandleDelete';
@@ -50,12 +51,10 @@ function FieldList({
   const handleDelete = useHandleDelete(onChange, propName, list);
   const handleAdd = useHandleAdd(onChange, propName, list);
   const groupedList: SubGroup[] = useGroupedList(list);
+  const [focused, setFocused] = useState<number | null>(null);
   const ListComponent: React.ElementType = ordered === true ? OL : UL;
   const FormComponent: React.ElementType =
     variant === 'multi' ? TextArea : Input;
-
-  console.log(groupedList);
-  console.log(list);
   return (
     <div>
       <Label varient='large'>{label}</Label>
@@ -71,6 +70,7 @@ function FieldList({
                     placeholder={`Please add a new ${label
                       .toLowerCase()
                       .substring(0, label.length - 1)}`}
+                    onFocus={() => setFocused(originalIndex)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       handleChange(e.target.value, originalIndex)
                     }
@@ -89,6 +89,7 @@ function FieldList({
                   type='text'
                   value={group.text}
                   placeholder='Please add a heading'
+                  onFocus={() => setFocused(group.originalIndex)}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     handleChange(e.target.value, group.originalIndex)
                   }
@@ -100,8 +101,20 @@ function FieldList({
           </div>
         );
       })}
-      <Add text='Add' onClick={() => handleAdd(false)} />
-      <Add text='Add header' onClick={() => handleAdd(true)} />
+      <Add
+        text='Add'
+        onClick={() => {
+          handleAdd(false, focused);
+          setFocused(null);
+        }}
+      />
+      <Add
+        text='Add header'
+        onClick={() => {
+          handleAdd(true, focused);
+          setFocused(null);
+        }}
+      />
     </div>
   );
 }

@@ -4,17 +4,20 @@ import FieldListProps from './FieldList.types';
 const useHandleAdd = (
   genericChange: FieldListProps['onChange'],
   propName: FieldListProps['propName'],
-  list: FieldListProps['list'],
+  list: { text: string; heading?: boolean }[],
 ): any =>
   useCallback(
-    (heading: boolean) => {
+    (heading: boolean, selectedIndex: number | null) => {
       const newItem: { text: string; heading?: boolean } = {
         text: '',
+        heading: heading || undefined,
       };
-      if (heading) {
-        newItem.heading = true;
+      if (selectedIndex !== null) {
+        list.splice(selectedIndex + 1, 0, newItem);
+        genericChange(propName, [...list]);
+      } else {
+        genericChange(propName, [...list, newItem]);
       }
-      genericChange(propName, [...list, newItem]);
     },
     [list],
   );

@@ -8,7 +8,7 @@ export const TextArea = styled.textarea`
 `;
 export const Heading = styled(Input)`
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 `;
 export const OL = styled.ol`
   margin-bottom: 0;
