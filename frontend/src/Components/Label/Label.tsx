@@ -1,11 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { ReactNode } from 'react';
-
 import { Label } from './Label.style';
-
-interface LabelProps extends React.HTMLProps<HTMLLabelElement> {
-  children: ReactNode;
-}
+import { LabelProps } from './Label.types';
 
 export default function Component({
   children,
@@ -13,3 +8,6 @@ export default function Component({
 }: LabelProps): JSX.Element {
   return <Label {...restProps}>{children}</Label>;
 }
+Component.defaultProps = {
+  varient: 'normal',
+};

@@ -1,4 +1,9 @@
-import FieldListProps from './FieldList.types';
+import { useState } from 'react';
+import useGroupedList from './useGroupedList';
+import useHandleChange from './useHandleChange';
+import useHandleDelete from './useHandleDelete';
+import useHandleAdd from './useHandleAdd';
+import FieldListProps, { SubGroup } from './FieldList.types';
 
 import { Input, TextArea, Heading, OL, UL, Row } from './FieldList.styles';
 import Label from '../Label';
@@ -6,6 +11,33 @@ import Button from '../Button';
 
 import Trash from './Trash.svg';
 import Plus from './Plus.svg';
+
+function Add({
+  text,
+  onClick,
+}: {
+  text: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}) {
+  return (
+    <Button type='button' onClick={onClick}>
+      <img src={Plus} alt='add' />
+      {text}
+    </Button>
+  );
+}
+
+function Delete({
+  onClick,
+}: {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}) {
+  return (
+    <Button shape='round' type='button' onClick={onClick}>
+      <img src={Trash} alt='delete' />
+    </Button>
+  );
+}
 
 function FieldList({
   label,
@@ -15,75 +47,75 @@ function FieldList({
   propName,
   onChange,
 }: FieldListProps): JSX.Element {
+  const handleChange = useHandleChange(onChange, propName, list);
+  const handleDelete = useHandleDelete(onChange, propName, list);
+  const handleAdd = useHandleAdd(onChange, propName, list);
+  const groupedList: SubGroup[] = useGroupedList(list);
+  const [focused, setFocused] = useState<number | null>(null);
   const ListComponent: React.ElementType = ordered === true ? OL : UL;
-
+  const FormComponent: React.ElementType =
+    variant === 'multi' ? TextArea : Input;
   return (
-    <Label htmlFor={propName}>
-      {label}
-      <ListComponent>
-        {list.map(({ text: rowText, heading }, rowIndex) => {
-          let FormComponent: React.ElementType =
-            variant === 'multi' ? TextArea : Input;
-
-          if (heading) FormComponent = Heading;
-          return (
-            // TODO: Find better key, problem is that there is no idea since it is generated on server
-            // eslint-disable-next-line react/no-array-index-key
-            <li key={rowIndex}>
+    <div>
+      <Label varient='large'>{label}</Label>
+      {groupedList.map((group) => {
+        const sublist = (
+          <ListComponent>
+            {group.items.map(({ text, originalIndex }) => (
+              <li key={originalIndex}>
+                <Row>
+                  <FormComponent
+                    type='text'
+                    value={text}
+                    placeholder={`Please add a new ${label
+                      .toLowerCase()
+                      .substring(0, label.length - 1)}`}
+                    onFocus={() => setFocused(originalIndex)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleChange(e.target.value, originalIndex)
+                    }
+                  />
+                  <Delete onClick={() => handleDelete(originalIndex)} />
+                </Row>
+              </li>
+            ))}
+          </ListComponent>
+        );
+        return (
+          <div key={group.originalIndex}>
+            {group.text !== undefined && (
               <Row>
-                <FormComponent
+                <Heading
                   type='text'
-                  value={rowText}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange(
-                      propName,
-                      list.map(({ text: storedText, ...restProps }, i) => ({
-                        text: i === rowIndex ? e.target.value : storedText,
-                        ...restProps,
-                      })),
-                    );
-                  }}
-                />
-                <Button
-                  shape='round'
-                  type='button'
-                  onClick={() =>
-                    onChange(
-                      propName,
-                      list.filter((_, i) => i !== rowIndex),
-                    )
+                  value={group.text}
+                  placeholder='Please add a heading'
+                  onFocus={() => setFocused(group.originalIndex)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleChange(e.target.value, group.originalIndex)
                   }
-                >
-                  <img src={Trash} alt='delete' />
-                </Button>
+                />
+                <Delete onClick={() => handleDelete(group.originalIndex)} />
               </Row>
-            </li>
-          );
-        })}
-      </ListComponent>
-      <Button
-        type='button'
-        onClick={() => onChange(propName, [...list, { text: '' }])}
-      >
-        <img src={Plus} alt='add' />
-        Add
-      </Button>
-      <Button
-        type='button'
+            )}
+            {sublist}
+          </div>
+        );
+      })}
+      <Add
+        text='Add'
         onClick={() => {
-          const newItem = {
-            text: '',
-            heading: true,
-          };
-          const newList =
-            list[0]?.heading === true ? [...list, newItem] : [newItem, ...list];
-          onChange(propName, newList);
+          handleAdd(false, focused);
+          setFocused(null);
         }}
-      >
-        <img src={Plus} alt='add' />
-        Add header
-      </Button>
-    </Label>
+      />
+      <Add
+        text='Add header'
+        onClick={() => {
+          handleAdd(true, focused);
+          setFocused(null);
+        }}
+      />
+    </div>
   );
 }
 export default FieldList;

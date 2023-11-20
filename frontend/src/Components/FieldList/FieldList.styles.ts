@@ -8,15 +8,18 @@ export const TextArea = styled.textarea`
 `;
 export const Heading = styled(Input)`
   font-weight: bold;
+  margin: 1rem 0;
 `;
 export const OL = styled.ol`
   margin-bottom: 0;
+  margin-left: 2rem;
   & > li:last-child {
     margin-bottom: 0;
   }
 `;
 export const UL = styled.ul`
   margin-bottom: 0;
+  margin-left: 2rem;
   & > li:last-child {
     margin-bottom: 0;
   }
