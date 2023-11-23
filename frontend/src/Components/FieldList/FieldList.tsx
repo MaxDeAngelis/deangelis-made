@@ -52,6 +52,7 @@ function FieldList({
   const handleAdd = useHandleAdd(onChange, propName, list);
   const groupedList: SubGroup[] = useGroupedList(list);
   const [focused, setFocused] = useState<number | null>(null);
+  const [added, setAdded] = useState<boolean>(false);
   const ListComponent: React.ElementType = ordered === true ? OL : UL;
   const FormComponent: React.ElementType =
     variant === 'multi' ? TextArea : Input;
@@ -70,6 +71,12 @@ function FieldList({
                     placeholder={`Please add a new ${label
                       .toLowerCase()
                       .substring(0, label.length - 1)}`}
+                    ref={(input: HTMLInputElement) => {
+                      if (added && input && originalIndex === focused) {
+                        input.focus();
+                        setAdded(false);
+                      }
+                    }}
                     onFocus={() => setFocused(originalIndex)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       handleChange(e.target.value, originalIndex)
@@ -89,6 +96,12 @@ function FieldList({
                   type='text'
                   value={group.text}
                   placeholder='Please add a heading'
+                  ref={(input: HTMLInputElement) => {
+                    if (added && input && group.originalIndex === focused) {
+                      input.focus();
+                      setAdded(false);
+                    }
+                  }}
                   onFocus={() => setFocused(group.originalIndex)}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     handleChange(e.target.value, group.originalIndex)
@@ -105,14 +118,16 @@ function FieldList({
         text='Add'
         onClick={() => {
           handleAdd(false, focused);
-          setFocused(null);
+          if (focused) setFocused(focused + 1);
+          setAdded(true);
         }}
       />
       <Add
         text='Add header'
         onClick={() => {
           handleAdd(true, focused);
-          setFocused(null);
+          if (focused) setFocused(focused + 1);
+          setAdded(true);
         }}
       />
     </div>
